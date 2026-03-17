@@ -118,7 +118,7 @@ export function HeroSection() {
 
             <button
               type="submit"
-              className="w-full md:w-auto flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-2 px-10 rounded-full font-semibold transition-all hover:scale-105 active:scale-95 shrink-0 uppercase tracking-wide h-15"
+              className="w-full md:w-auto flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-2 px-10 rounded-full font-semibold transition-all hover:scale-105 active:scale-95 shrink-0 uppercase tracking-wide h-15 cursor-pointer"
             >
               <CalendarCheck className="w-5 h-5 mb-1" />
               Book Now

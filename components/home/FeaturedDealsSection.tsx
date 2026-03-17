@@ -138,7 +138,7 @@ export function FeaturedDealsSection() {
                   </span>
                   <Link
                     href="/results"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors group/btn"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-gray-800 px-4 py-2 rounded-lg transition-colors group/btn"
                   >
                     Book Now{" "}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

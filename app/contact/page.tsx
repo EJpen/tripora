@@ -33,7 +33,7 @@ export default function ContactPage() {
               <div className="space-y-8">
                 <div className="flex gap-5">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
-                    <MapPin className="w-5 h-5 text-primary-600" />
+                    <MapPin className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-gray-900 mb-1">Office Address</h4>
@@ -43,7 +43,7 @@ export default function ContactPage() {
 
                 <div className="flex gap-5">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
-                    <Phone className="w-5 h-5 text-primary-600" />
+                    <Phone className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-gray-900 mb-1">Phone Number</h4>
@@ -53,7 +53,7 @@ export default function ContactPage() {
 
                 <div className="flex gap-5">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
-                    <Mail className="w-5 h-5 text-primary-600" />
+                    <Mail className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-gray-900 mb-1">Email Address</h4>
@@ -69,17 +69,17 @@ export default function ContactPage() {
             {isSubmitted ? (
               <div className="bg-primary-50 rounded-3xl p-10 h-full flex flex-col items-center justify-center text-center border border-primary-100 min-h-[500px]">
                 <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-primary-600" />
+                  <CheckCircle2 className="w-10 h-10 text-gray-800" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">Inquiry Sent Successfully!</h3>
                 <p className="text-gray-600 max-w-md">Thank you for reaching out. One of our travel experts will contact you within 24 hours.</p>
-                <Button 
-                  className="mt-8"
+                {/* <Button 
+                  className="mt-8 text-gray-800"
                   variant="outline"
                   onClick={() => setIsSubmitted(false)}
                 >
                   Send Another Message
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-10 border border-gray-100 shadow-xl shadow-gray-200/40">

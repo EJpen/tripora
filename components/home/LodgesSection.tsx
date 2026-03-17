@@ -107,10 +107,10 @@ export function LodgesSection() {
                   </span>
                   <Link
                     href="/results"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-gray-900 hover:text-primary-600 group/btn"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-gray-900 group/btn"
                   >
                     Book Now{" "}
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover/btn:translate-x-1 group-hover/btn:text-primary-600 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover/btn:translate-x-1 transition-all" />
                   </Link>
                 </div>
               </div>
