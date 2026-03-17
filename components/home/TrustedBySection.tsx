@@ -20,8 +20,8 @@ export function TrustedBySection() {
         {/* Marquee Container */}
         <div className="relative flex overflow-x-hidden">
           {/* Gradient Masks for smooth fading on edges */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+          <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10"></div>
+          <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10"></div>
           
           <div className="animate-marquee flex whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
             {/* Original Items */}

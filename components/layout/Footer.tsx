@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { Compass, Facebook, Instagram, Twitter, MessageCircle } from "lucide-react";
-import { Input } from "../ui/Input";
-import { Button } from "../ui/Button";
 
 export function Footer() {
   return (
