@@ -1,26 +1,60 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Phone, Mail, CheckCircle2 } from "lucide-react";
+import { MapPin, Phone, Mail, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setIsSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="bg-white min-h-screen pt-32 pb-24 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">Get in Touch</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+            Get in Touch
+          </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Have questions about a trip or want to request a callback? <br className="hidden sm:block"/> Fill out the form below and our team will get back to you shortly.
+            Have questions about a trip or want to request a callback?{" "}
+            <br className="hidden sm:block" /> Fill out the form below and our
+            team will get back to you shortly.
           </p>
         </div>
 
@@ -28,16 +62,24 @@ export default function ContactPage() {
           {/* Contact Details */}
           <div>
             <div className="bg-gray-50 rounded-3xl p-10 h-full">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8">Contact Information</h2>
-              
+              <h2 className="text-2xl font-bold text-gray-900 mb-8">
+                Contact Information
+              </h2>
+
               <div className="space-y-8">
                 <div className="flex gap-5">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
                     <MapPin className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-1">Office Address</h4>
-                    <p className="text-gray-600">123 Travel Boulevard, Suite 500<br/>San Francisco, CA 94105</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-1">
+                      Office Address
+                    </h4>
+                    <p className="text-gray-600">
+                      123 Travel Boulevard, Suite 500
+                      <br />
+                      San Francisco, CA 94105
+                    </p>
                   </div>
                 </div>
 
@@ -46,8 +88,14 @@ export default function ContactPage() {
                     <Phone className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-1">Phone Number</h4>
-                    <p className="text-gray-600">+1 (800) 123-4567<br/>Mon-Fri 9am to 6pm PST</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-1">
+                      Phone Number
+                    </h4>
+                    <p className="text-gray-600">
+                      +1 (800) 123-4567
+                      <br />
+                      Mon-Fri 9am to 6pm PST
+                    </p>
                   </div>
                 </div>
 
@@ -56,8 +104,14 @@ export default function ContactPage() {
                     <Mail className="w-5 h-5 text-gray-800" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-1">Email Address</h4>
-                    <p className="text-gray-600">inquiries@tripora.com<br/>support@tripora.com</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-1">
+                      Email Address
+                    </h4>
+                    <p className="text-gray-600">
+                      inquiries@tripora.com
+                      <br />
+                      support@tripora.com
+                    </p>
                   </div>
                 </div>
               </div>
@@ -71,8 +125,13 @@ export default function ContactPage() {
                 <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm mb-6">
                   <CheckCircle2 className="w-10 h-10 text-gray-800" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">Inquiry Sent Successfully!</h3>
-                <p className="text-gray-600 max-w-md">Thank you for reaching out. One of our travel experts will contact you within 24 hours.</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  Inquiry Sent Successfully!
+                </h3>
+                <p className="text-gray-600 max-w-md">
+                  Thank you for reaching out. One of our travel experts will
+                  contact you within 24 hours.
+                </p>
                 {/* <Button 
                   className="mt-8 text-gray-800"
                   variant="outline"
@@ -82,27 +141,79 @@ export default function ContactPage() {
                 </Button> */}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-10 border border-gray-100 shadow-xl shadow-gray-200/40">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">Send us a Message</h2>
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white rounded-3xl p-10 border border-gray-100 shadow-xl shadow-gray-200/40"
+              >
+                <h2 className="text-2xl font-bold text-gray-900 mb-8">
+                  Send us a Message
+                </h2>
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                    <Input required placeholder="Jane Doe" className="bg-gray-50 border-gray-100 focus-visible:bg-white" />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name
+                    </label>
+                    <Input
+                      name="name"
+                      required
+                      placeholder="Jane Doe"
+                      className="bg-gray-50 border-gray-100 focus-visible:bg-white"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                    <Input required type="email" placeholder="jane@example.com" className="bg-gray-50 border-gray-100 focus-visible:bg-white" />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address
+                    </label>
+                    <Input
+                      name="email"
+                      required
+                      type="email"
+                      placeholder="jane@example.com"
+                      className="bg-gray-50 border-gray-100 focus-visible:bg-white"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                    <Input required type="tel" placeholder="+1 (555) 000-0000" className="bg-gray-50 border-gray-100 focus-visible:bg-white" />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      name="phone"
+                      required
+                      type="tel"
+                      placeholder="+1 (555) 000-0000"
+                      className="bg-gray-50 border-gray-100 focus-visible:bg-white"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Travel Inquiry</label>
-                    <Textarea required placeholder="Tell us about the trip you're interested in..." className="bg-gray-50 border-gray-100 focus-visible:bg-white text-base" />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Travel Inquiry
+                    </label>
+                    <Textarea
+                      name="message"
+                      required
+                      placeholder="Tell us about the trip you're interested in..."
+                      className="bg-gray-50 border-gray-100 focus-visible:bg-white text-base"
+                    />
                   </div>
-                  <Button type="submit" size="lg" className="w-full text-lg h-14 mt-4 shadow-md bg-gray-900 hover:bg-gray-800 transition-all active:scale-95">
-                    Send Request
+                  {error && (
+                    <p className="text-red-600 text-sm text-center bg-red-50 rounded-lg p-3">
+                      {error}
+                    </p>
+                  )}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isLoading}
+                    className="w-full text-lg h-14 mt-4 shadow-md bg-gray-900 hover:bg-gray-800 transition-all active:scale-95 disabled:opacity-60"
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin mr-2" />{" "}
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Request"
+                    )}
                   </Button>
                 </div>
               </form>
