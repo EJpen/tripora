@@ -41,7 +41,7 @@ export default function ResultsPage() {
                 <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
                   Total Price
                 </p>
-                <p className="text-4xl font-bold text-primary-600 flex items-center sm:justify-end gap-1">
+                <p className="text-4xl font-bold text-gray-800 flex items-center sm:justify-end gap-1">
                   <DollarSign className="w-6 h-6" />
                   1,299
                 </p>
